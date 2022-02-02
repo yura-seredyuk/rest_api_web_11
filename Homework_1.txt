@@ -1,0 +1,9 @@
+CLASSWORK: https://github.com/yura-seredyuk/rest_api_web_11
+
+Додати CRUD операції для обробки однієї адреси
+Додати в клієнт методи для зміни та видалення адреси за вказаним ID
+Покрити тестами створені СRUD операції
+
+
+запуск усіх тестів: python manage.py test -v 2
+конктерного теста: python manage.py test rest_f.tests.API_Testing.test_get_addreses -v 2
