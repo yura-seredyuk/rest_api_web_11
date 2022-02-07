@@ -14,7 +14,7 @@ def post_address():
         "zip_code": 33030,
         "street": "Соборна",
         "house_num": "46",
-        "apartaments": 'lolo'
+        "apartaments": 0
     }
     response = requests.post(BASE_URL+'address/', data=data)
 

@@ -16,7 +16,7 @@ class AddressValidator:
             self.raize_error(attrs, 'apartaments', message)
 
     def raize_error(self, attrs, validated_field, message):
-        message = self.message + f'The {validated_field} field message.'
+        message = self.message + f'The {validated_field} field {message}.'
         self.validated_field = validated_field
         self.validated_data = attrs[validated_field]
         raise serializers.ValidationError(message, code=validated_field)
