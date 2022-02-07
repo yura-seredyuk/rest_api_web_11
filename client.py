@@ -1,4 +1,5 @@
 import requests
+import re
 from pprint import pprint
 
 BASE_URL = 'http://127.0.0.1:8000/'
@@ -14,7 +15,7 @@ def post_address():
         "zip_code": 33030,
         "street": "Соборна",
         "house_num": "46",
-        "apartaments": 0
+        "apartaments": 5
     }
     response = requests.post(BASE_URL+'address/', data=data)
 
@@ -42,9 +43,14 @@ def delete_address(pk):
     print(response.reason, response.status_code)
 
 
-
+# ||(^[а-щА-ЩЬьЮюЯяЇїІіЄєҐґ]+$) (^[A-Za-z]+$)
 if __name__ == '__main__':
-    post_address()
+    text_pattern = re.compile('^[A-Za-z]+$')
+    rez = re.search(text_pattern, 'DSd')
+    # print(rez.group(0) == True)
+    if rez:
+        print(rez.group(0))
+    # post_address()
     # get_list()
     # get_item(1)
     print('---------------')

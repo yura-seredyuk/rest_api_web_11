@@ -23,6 +23,7 @@ class API_Testing(APITestCase):
     def test_post_address(self):
         test_data = copy(TEST_DATA)
         test_data['apartaments'] = 300
+        test_data['country'] = 'Україна'
         response = self.client.post(BASE_URL+'address/', 
                                     data=test_data)
         self.assertEqual(response.status_code, 201)
@@ -53,7 +54,28 @@ class API_Testing(APITestCase):
         test_data['apartaments'] = 'apartaments'
         response = self.client.post(BASE_URL+'address/', 
                                     data=test_data)
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('integer is required', response.json()['apartaments'][0])
+        print('Test 1. Passed')
+        
+        test_data['apartaments'] = 0
+        response = self.client.post(BASE_URL+'address/', 
+                                    data=test_data)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('cannote be less or equal zero', response.json()['non_field_errors'][0])
+
+        print('Test 2. Passed')
+
+        test_data = copy(TEST_DATA)
+        test_data['country'] = 'ARR2'
+        response = self.client.post(BASE_URL+'address/', 
+                                    data=test_data)
+        print(response.json(), response.status_code)                            
+        self.assertEqual(response.status_code, 400)
+       
+        # self.assertIn('cannote be less or equal zero', response.json()['non_field_errors'][0])
+
+        print('Test 3. Passed')
 
     def test_delete_undefined_address(self):
         response = self.client.delete(BASE_URL+'address/100/')
