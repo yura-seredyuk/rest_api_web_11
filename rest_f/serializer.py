@@ -17,7 +17,15 @@ class AddressSerializer(serializers.ModelSerializer):
         return rezult
 
     def update(self, instance, validated_data):
-        pass
+        print(validated_data)
+        instance.country = validated_data.get('country', instance.country)
+        instance.city = validated_data.get('city', instance.city)
+        instance.zip_code = validated_data.get('zip_code', instance.zip_code)
+        instance.street = validated_data.get('street', instance.street)
+        instance.house_num = validated_data.get('house_num', instance.house_num)
+        instance.apartaments = validated_data.get('apartaments', instance.apartaments)
+        instance.save()
+        return instance
 
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
