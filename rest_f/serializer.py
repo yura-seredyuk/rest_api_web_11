@@ -1,14 +1,17 @@
 from dataclasses import fields
 from pprint import pprint
 from pyexpat import model
+from wsgiref.validate import validator
 from rest_framework import serializers
 from .models import UserList, Address
+from .validator import AddressValidator
 
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ['id', 'country', 'city', 'zip_code', 'street', 'house_num', 'apartaments']
+        validators = [AddressValidator()]
 
     def create(self, validated_data):
         # pprint(validated_data)
@@ -17,7 +20,6 @@ class AddressSerializer(serializers.ModelSerializer):
         return rezult
 
     def update(self, instance, validated_data):
-        print(validated_data)
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)
         instance.zip_code = validated_data.get('zip_code', instance.zip_code)

@@ -1,3 +1,5 @@
+from pprint import pprint
+from copy import copy, deepcopy
 from django.test import TestCase
 from rest_framework.test import APITestCase, RequestsClient
 
@@ -19,9 +21,10 @@ class API_Testing(APITestCase):
                                     data=TEST_DATA)
 
     def test_post_address(self):
-        TEST_DATA['apartaments'] = 300
+        test_data = copy(TEST_DATA)
+        test_data['apartaments'] = 300
         response = self.client.post(BASE_URL+'address/', 
-                                    data=TEST_DATA)
+                                    data=test_data)
         self.assertEqual(response.status_code, 201)
 
 
@@ -29,3 +32,29 @@ class API_Testing(APITestCase):
         response = self.client.get(BASE_URL+'address/')
         # print(response.json())
         self.assertEqual(response.status_code, 200)
+
+    def test_get_address(self):
+        response = self.client.get(BASE_URL+'address/1/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_address(self):
+        test_data = deepcopy(TEST_DATA)
+        test_data['apartaments'] = 204
+        response = self.client.put(BASE_URL+'address/1/', 
+                                    data=test_data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_address(self):
+        response = self.client.delete(BASE_URL+'address/1/')
+        self.assertEqual(response.status_code, 204)
+
+    def test_post_invalid_address(self):
+        test_data = copy(TEST_DATA)
+        test_data['apartaments'] = 'apartaments'
+        response = self.client.post(BASE_URL+'address/', 
+                                    data=test_data)
+        self.assertEqual(response.status_code, 201)
+
+    def test_delete_undefined_address(self):
+        response = self.client.delete(BASE_URL+'address/100/')
+        self.assertEqual(response.status_code, 404)

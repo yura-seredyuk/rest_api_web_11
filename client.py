@@ -14,11 +14,11 @@ def post_address():
         "zip_code": 33030,
         "street": "Соборна",
         "house_num": "46",
-        "apartaments": 200
+        "apartaments": 'lolo'
     }
     response = requests.post(BASE_URL+'address/', data=data)
 
-    print(response.json(), response.status_code)
+    print(response.json(), response.reason, response.status_code)
 
 def get_item(pk):
     response = requests.get(BASE_URL+f'address/{pk}/')
@@ -31,18 +31,23 @@ def update_address(pk):
         "zip_code": 33030,
         "street": "Соборна",
         "house_num": "46",
-        "apartaments": 404
+        "apartaments": 'lolo'
     }
     response = requests.put(BASE_URL+f'address/{pk}/', data=data)
 
-    print(response, response.status_code)
+    print(response.reason, response.status_code)
+
+def delete_address(pk):
+    response = requests.delete(BASE_URL+f'address/{pk}/')
+    print(response.reason, response.status_code)
 
 
 
 if __name__ == '__main__':
-    # post_address()
+    post_address()
     # get_list()
-    get_item(1)
+    # get_item(1)
     print('---------------')
     # update_address(1)
+    # delete_address(8)
     # pass
