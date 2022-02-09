@@ -15,7 +15,7 @@ def post_address():
         "zip_code": 33030,
         "street": "Соборна",
         "house_num": "46",
-        "apartaments": 5
+        "apartaments": 200
     }
     response = requests.post(BASE_URL+'address/', data=data)
 
@@ -32,7 +32,7 @@ def update_address(pk):
         "zip_code": 33030,
         "street": "Соборна",
         "house_num": "46",
-        "apartaments": 'lolo'
+        "apartaments": '200'
     }
     response = requests.put(BASE_URL+f'address/{pk}/', data=data)
 
@@ -45,15 +45,15 @@ def delete_address(pk):
 
 # ||(^[а-щА-ЩЬьЮюЯяЇїІіЄєҐґ]+$) (^[A-Za-z]+$)
 if __name__ == '__main__':
-    text_pattern = re.compile('^[A-Za-z]+$')
-    rez = re.search(text_pattern, 'DSd')
-    # print(rez.group(0) == True)
-    if rez:
-        print(rez.group(0))
+    # text_pattern = re.compile('^[A-Za-z]+$')
+    # rez = re.search(text_pattern, 'DSd')
+    # # print(rez.group(0) == True)
+    # if rez:
+    #     print(rez.group(0))
     # post_address()
     # get_list()
     # get_item(1)
     print('---------------')
-    # update_address(1)
+    update_address(1)
     # delete_address(8)
     # pass

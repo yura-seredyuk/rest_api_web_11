@@ -14,12 +14,19 @@ class AddressSerializer(serializers.ModelSerializer):
         validators = [AddressValidator()]
 
     def create(self, validated_data):
-        # pprint(validated_data)
+        address = Address.objects.filter(**validated_data)
+        if address:
+            raise serializers.ValidationError("Serializer error: Address with this data is already exixts.")
         rezult = Address.objects.create(**validated_data)
-        # print(rezult.id)
         return rezult
 
     def update(self, instance, validated_data):
+        print('instance', instance.__dict__)
+        print('validated_data', validated_data)
+        address = Address.objects.filter(**validated_data)
+        if address:
+            raise serializers.ValidationError("Serializer error: Address with this data is already exixts.")
+        
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)
         instance.zip_code = validated_data.get('zip_code', instance.zip_code)
