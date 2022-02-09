@@ -1,7 +1,4 @@
-from dataclasses import fields
 from pprint import pprint
-from pyexpat import model
-from wsgiref.validate import validator
 from rest_framework import serializers
 from .models import UserList, Address
 from .validator import AddressValidator
@@ -21,12 +18,15 @@ class AddressSerializer(serializers.ModelSerializer):
         return rezult
 
     def update(self, instance, validated_data):
-        print('instance', instance.__dict__)
-        print('validated_data', validated_data)
         address = Address.objects.filter(**validated_data)
         if address:
-            raise serializers.ValidationError("Serializer error: Address with this data is already exixts.")
+            if instance == address[0]:
+                print("Serializer message: None fields was changed.")
+                return instance
+            else:
+                raise serializers.ValidationError("Serializer error: Address with this data is already exixts.")
         
+
         instance.country = validated_data.get('country', instance.country)
         instance.city = validated_data.get('city', instance.city)
         instance.zip_code = validated_data.get('zip_code', instance.zip_code)

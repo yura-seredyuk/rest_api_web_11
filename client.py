@@ -32,28 +32,21 @@ def update_address(pk):
         "zip_code": 33030,
         "street": "Соборна",
         "house_num": "46",
-        "apartaments": '200'
+        "apartaments": '202'
     }
     response = requests.put(BASE_URL+f'address/{pk}/', data=data)
 
-    print(response.reason, response.status_code)
+    print(response.json(), response.reason, response.status_code)
 
 def delete_address(pk):
     response = requests.delete(BASE_URL+f'address/{pk}/')
     print(response.reason, response.status_code)
 
 
-# ||(^[а-щА-ЩЬьЮюЯяЇїІіЄєҐґ]+$) (^[A-Za-z]+$)
 if __name__ == '__main__':
-    # text_pattern = re.compile('^[A-Za-z]+$')
-    # rez = re.search(text_pattern, 'DSd')
-    # # print(rez.group(0) == True)
-    # if rez:
-    #     print(rez.group(0))
     # post_address()
     # get_list()
     # get_item(1)
     print('---------------')
     update_address(1)
     # delete_address(8)
-    # pass
