@@ -12,9 +12,9 @@ def post_address():
     data = {
         "country": "Україна",
         "city": "Рівне",
-        "zip_code": 33030,
+        "zip_code": '33030',
         "street": "Соборна",
-        "house_num": "46",
+        "house_num": "Wr",
         "apartaments": 200
     }
     response = requests.post(BASE_URL+'address/', data=data)
@@ -29,7 +29,7 @@ def update_address(pk):
     data = {
         "country": "Україна",
         "city": "Рівне",
-        "zip_code": 33030,
+        "zip_code": '33030',
         "street": "Соборна",
         "house_num": "46",
         "apartaments": '202'
@@ -44,9 +44,10 @@ def delete_address(pk):
 
 
 if __name__ == '__main__':
-    # post_address()
+
+    post_address()
     # get_list()
     # get_item(1)
     print('---------------')
-    update_address(1)
+    # update_address(1)
     # delete_address(8)

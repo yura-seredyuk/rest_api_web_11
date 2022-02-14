@@ -8,9 +8,9 @@ BASE_URL = 'http://127.0.0.1:8000/'
 TEST_DATA = {
         "country": "USA",
         "city": "NY",
-        "zip_code": 33030,
+        "zip_code": '33030',
         "street": "Freedom",
-        "house_num": "46",
+        "house_num": "46/B",
         "apartaments": 200
     }
 
@@ -31,7 +31,6 @@ class API_Testing(APITestCase):
 
     def test_get_addresses(self):
         response = self.client.get(BASE_URL+'address/')
-        # print(response.json())
         self.assertEqual(response.status_code, 200)
 
     def test_get_address(self):
@@ -56,7 +55,7 @@ class API_Testing(APITestCase):
                                     data=test_data)
         self.assertEqual(response.status_code, 400)
         self.assertIn('integer is required', response.json()['apartaments'][0])
-        print('Test 1. Passed')
+        print('\nTest 1. Passed')
         
         test_data['apartaments'] = 0
         response = self.client.post(BASE_URL+'address/', 
@@ -76,6 +75,27 @@ class API_Testing(APITestCase):
 
         print('Test 3. Passed')
 
+        test_data = copy(TEST_DATA)
+        test_data['zip_code'] = '12WQ'
+        response = self.client.post(BASE_URL+'address/', 
+                                    data=test_data)
+        self.assertEqual(response.status_code, 400)
+        print('Test 4. Passed')
+
+        test_data['zip_code'] = '12'
+        response = self.client.post(BASE_URL+'address/', 
+                                    data=test_data)
+        self.assertEqual(response.status_code, 400)
+        print('Test 5. Passed')
+
+        test_data = copy(TEST_DATA)
+        test_data['house_num'] = 'WQ'
+        response = self.client.post(BASE_URL+'address/', 
+                                    data=test_data)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('data does not match the pattern', response.json()['non_field_errors'][0])
+        print('Test 6. Passed')
+
     def test_delete_undefined_address(self):
         response = self.client.delete(BASE_URL+'address/100/')
         self.assertEqual(response.status_code, 404)
@@ -86,7 +106,7 @@ class API_Testing(APITestCase):
                                     data=TEST_DATA)
         self.assertEqual(response.status_code, 400)
         self.assertIn('Address with this data is already exixts', response.json()[0])
-        print('Test 1. Passed')
+        print('\nTest 1. Passed')
         
         # PUT
         test_data = copy(TEST_DATA)

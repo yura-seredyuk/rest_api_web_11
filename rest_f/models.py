@@ -3,8 +3,8 @@ from django.db import models
 
 class Address(models.Model):
     country = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    zip_code = models.IntegerField()
+    city = models.CharField(max_length=100, null=False)
+    zip_code = models.CharField(max_length=12)
     street = models.CharField(max_length=100)
     house_num = models.CharField(max_length=10)
     apartaments = models.IntegerField(null=True)

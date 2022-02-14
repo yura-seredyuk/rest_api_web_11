@@ -21,7 +21,7 @@ class AddressSerializer(serializers.ModelSerializer):
         address = Address.objects.filter(**validated_data)
         if address:
             if instance == address[0]:
-                print("Serializer message: None fields was changed.")
+                print("\nSerializer message: None fields was changed.")
                 return instance
             else:
                 raise serializers.ValidationError("Serializer error: Address with this data is already exixts.")
